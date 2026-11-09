@@ -136,6 +136,7 @@
 		.thought {
 			display: -webkit-box;
 			-webkit-line-clamp: 9;
+			line-clamp: 9;
 			-webkit-box-orient: vertical;
 			hyphens: auto;
 			overflow: hidden;

@@ -16,7 +16,7 @@
 	import Icon from "@/lib/Icon.svelte";
 	import { watchedStatuses } from "@/lib/util/helpers";
 	import { removeWatchedSeason, updateWatchedSeason } from "./api";
-	import { onMount } from "svelte";
+	import { onMount, untrack } from "svelte";
 
 	interface Props {
 		tvId: number;
@@ -34,7 +34,7 @@
 		lastViewedSeasonChanged,
 	}: Props = $props();
 
-	let activeSeason = $state(lastViewedSeason ?? 1);
+	let activeSeason = $state(untrack(() => lastViewedSeason ?? 1));
 	let seasonDetailsReq: Promise<TMDBSeasonDetails> | undefined = $state();
 
 	onMount(() => {

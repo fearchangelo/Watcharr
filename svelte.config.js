@@ -2,6 +2,38 @@ import adapter from "@sveltejs/adapter-node";
 import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 import { sveltePreprocess } from "svelte-preprocess";
 
+const nodeAdapter = adapter();
+
+/**
+ * adapter-node re-bundles the server output with one chunk per module
+ * (see https://github.com/sveltejs/kit/issues/16092). Modules whose code is
+ * only needed on the client (e.g. `notify`) tree-shake to nothing on the
+ * server, so rollup reports "Generated an empty chunk" even though the output
+ * is correct. Filter that one message so builds stay warning-free.
+ *
+ * @type {import('@sveltejs/kit').Adapter}
+ */
+const quietNodeAdapter = {
+	...nodeAdapter,
+	async adapt(builder) {
+		const warn = console.warn;
+		console.warn = (...args) => {
+			if (
+				typeof args[0] === "string" &&
+				args[0].startsWith("Generated an empty chunk")
+			) {
+				return;
+			}
+			warn(...args);
+		};
+		try {
+			await nodeAdapter.adapt(builder);
+		} finally {
+			console.warn = warn;
+		}
+	},
+};
+
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	// Consult https://kit.svelte.dev/docs/integrations#preprocessors
@@ -22,7 +54,7 @@ const config = {
 	],
 
 	kit: {
-		adapter: adapter(),
+		adapter: quietNodeAdapter,
 
 		alias: {
 			"@": "src",

@@ -13,6 +13,7 @@
 	import Setting from "../settings/Setting.svelte";
 	import Spinner from "../Spinner.svelte";
 	import ListBox from "../ListBox.svelte";
+	import { untrack } from "svelte";
 
 	interface Props {
 		content: Media;
@@ -32,18 +33,20 @@
 	let selectedServarrIndex: number = $state(0);
 	let selectedServerCfg: SonarrTestResponse | undefined = $state();
 	let seasonItems: ListBoxItem[] = $state(
-		content.seasons
-			? content.seasons.flatMap((s) => {
-					if (s.number == undefined) {
-						return [];
-					}
-					return {
-						id: s.number,
-						value: false,
-						displayValue: s.name ?? `(${s.number}) Unknown`,
-					};
-				})
-			: [],
+		untrack(() =>
+			content.seasons
+				? content.seasons.flatMap((s) => {
+						if (s.number == undefined) {
+							return [];
+						}
+						return {
+							id: s.number,
+							value: false,
+							displayValue: s.name ?? `(${s.number}) Unknown`,
+						};
+					})
+				: [],
+		),
 	);
 	let addRequestRunning = $state(false);
 

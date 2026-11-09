@@ -154,10 +154,6 @@
 				text-overflow: ellipsis;
 			}
 
-			& > div:not(:first-of-type) {
-				margin-top: 30px;
-			}
-
 			@media screen and (max-width: 740px) {
 				width: 100%;
 				min-width: unset;

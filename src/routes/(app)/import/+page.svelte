@@ -815,8 +815,7 @@
 			color: $text-color;
 			fill: $text-color;
 
-			&:hover,
-			&.dragging-over {
+			&:hover {
 				fill: $bg-color;
 				color: $bg-color;
 				background-color: $accent-color-hover;
