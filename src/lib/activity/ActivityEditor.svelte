@@ -5,6 +5,7 @@
 	import ActivityEditorRawView from "./ActivityEditorRawView.svelte";
 	import DateInput from "../input/DateInput.svelte";
 	import { SvelteDate } from "svelte/reactivity";
+	import { untrack } from "svelte";
 	import TimeInput from "../input/TimeInput.svelte";
 	import Error from "../Error.svelte";
 
@@ -19,11 +20,15 @@
 	let { activity, activityMessage, onClose, onRemoved, onUpdated }: Props =
 		$props();
 
-	let initialDate = Date.parse(activity.customDate ?? activity.createdAt);
+	// Snapshot the activity as it was when the editor opened so edits can be
+	// compared against it. Later prop changes are intentionally not tracked.
+	const initialDate = untrack(() =>
+		Date.parse(activity.customDate ?? activity.createdAt),
+	);
 
 	let error: string | undefined = $state();
 	let date = new SvelteDate(initialDate);
-	let note = $state(activity.note);
+	let note = $state(untrack(() => activity.note));
 	let anythingChanged: boolean = $derived(
 		date.getTime() != initialDate || note != activity.note,
 	);

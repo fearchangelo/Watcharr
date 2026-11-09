@@ -104,14 +104,6 @@
 			padding: 10px;
 			background-color: $accent-color;
 			border-radius: 5px;
-
-			a {
-				margin-left: auto;
-
-				button {
-					width: max-content;
-				}
-			}
 		}
 	}
 </style>

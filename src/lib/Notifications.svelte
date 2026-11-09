@@ -93,7 +93,8 @@
 				padding: 10px 12px;
 				padding-left: 9px;
 
-				a {
+				/* Links come from {@html} notification text, so they are not scoped. */
+				:global(a) {
 					color: white;
 					text-decoration: underline;
 				}

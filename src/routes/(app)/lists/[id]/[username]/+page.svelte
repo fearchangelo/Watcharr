@@ -233,13 +233,6 @@
 		width: max-content;
 	}
 
-	textarea {
-		border: 0;
-		padding: 0;
-		resize: none;
-		text-overflow: ellipsis;
-	}
-
 	.basic-ctr {
 		min-width: 200px;
 		max-width: 300px;
@@ -267,6 +260,7 @@
 			text-overflow: ellipsis;
 			display: -webkit-box;
 			-webkit-line-clamp: 2;
+			line-clamp: 2;
 			-webkit-box-orient: vertical;
 		}
 	}

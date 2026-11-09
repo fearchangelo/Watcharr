@@ -22,12 +22,12 @@
 		zoomOnHover = true,
 	}: Props = $props();
 
-	const poster = path
-		? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${path}`
-		: undefined;
-	const link: `/person/${number}` | undefined = id
-		? `/person/${id}`
-		: undefined;
+	const poster = $derived(
+		path ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${path}` : undefined,
+	);
+	const link = $derived<`/person/${number}` | undefined>(
+		id ? `/person/${id}` : undefined,
+	);
 </script>
 
 <!-- Quick fix to ignore error, should be fixed -->
@@ -144,15 +144,15 @@
 				font-size: 18px;
 				color: white;
 				word-wrap: break-word;
-
-				a {
-					color: white;
-				}
 			}
 
 			h2 {
 				margin-top: auto;
 				text-shadow: 1px 1px 3px black;
+
+				a {
+					color: white;
+				}
 			}
 
 			h3 {

@@ -468,7 +468,7 @@
 			}
 
 			/* Slowly decrease the gap to ensure the main search bar doesn't get big enough again and pop back up in the nav. */
-			body.split-nav & {
+			:global(body.split-nav) & {
 				@media screen and (max-width: 380px) {
 					gap: 10px;
 				}

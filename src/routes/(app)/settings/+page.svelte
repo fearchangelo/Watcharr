@@ -248,9 +248,6 @@
 				text-overflow: ellipsis;
 			}
 
-			h3 {
-			}
-
 			& > div:not(:first-of-type) {
 				margin-top: 30px;
 			}

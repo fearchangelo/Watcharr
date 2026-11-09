@@ -44,8 +44,25 @@ export default defineConfig({
 			devOptions: {
 				enabled: true,
 			},
+			workbox: {
+				// The SvelteKit integration adds a `prerendered/**` glob by default,
+				// but this app prerenders nothing, so workbox warns about an unmatched
+				// pattern on every build. Setting `modifyURLPrefix` opts out of the
+				// default glob list so only the client output is precached.
+				modifyURLPrefix: {},
+				globPatterns: ["client/**/*.{js,css,ico,png,svg,webp,webmanifest}"],
+			},
 		}),
 	],
+	build: {
+		rolldownOptions: {
+			checks: {
+				// SvelteKit's own plugins dominate build time; the timing report is
+				// noise for this project.
+				pluginTimings: false,
+			},
+		},
+	},
 	define: {
 		__WATCHARR_VERSION__: JSON.stringify(pkg.version),
 	},

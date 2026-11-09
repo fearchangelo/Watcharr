@@ -146,10 +146,6 @@
 				font-weight: bold;
 			}
 
-			&:not(:last-of-type) {
-				/* border-right: 1px solid $placeholder-color; */
-			}
-
 			:global(svg) {
 				width: 24px;
 			}
